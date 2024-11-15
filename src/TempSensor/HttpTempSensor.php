@@ -2,6 +2,8 @@
 
 namespace App\TempSensor;
 
+use DateTimeImmutable;
+
 class HttpTempSensor extends AbstractTempSensor
 {
     private string $url;
@@ -11,10 +13,10 @@ class HttpTempSensor extends AbstractTempSensor
         $this->url = $url;
     }
 
-    public function getTemp(): ?float
+    protected function getTemp(): TempData
     {
         if (!preg_match('|^https?://|', $this->url)) {
-            return null;
+            return new TempData(null, new DateTimeImmutable(), "invalid url");
         }
         $result = @file_get_contents($this->url);
         if (is_string($result)) {
@@ -22,10 +24,10 @@ class HttpTempSensor extends AbstractTempSensor
             if (is_array($result) && isset($result['temp'])) {
                 $temp = $result['temp'];
                 if (is_numeric($temp)) {
-                    return (float)$temp;
+                    return new TempData((float)$temp, new DateTimeImmutable());
                 }
             }
         }
-        return null;
+        return new TempData(null, new DateTimeImmutable(), "invalid response");
     }
 }

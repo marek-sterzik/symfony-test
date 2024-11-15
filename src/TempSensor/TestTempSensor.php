@@ -2,10 +2,12 @@
 
 namespace App\TempSensor;
 
+use DateTimeImmutable;
+
 class TestTempSensor extends AbstractTempSensor
 {
-    public function getTemp(): ?float
+    protected function getTemp(): TempData
     {
-        return 22.5;
+        return new TempData(22.5, new DateTimeImmutable());
     }
 }

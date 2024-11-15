@@ -5,7 +5,12 @@ namespace App\TempSensor;
 abstract class AbstractTempSensor implements TempSensor
 {
     private string $name;
-    abstract public function getTemp(): ?float;
+    abstract protected function getTemp(): TempData;
+
+    public function getTempData(): TempData
+    {
+        return $this->getTemp()->setSensorName($this->getName());
+    }
 
     public function getName(): string
     {
@@ -16,16 +21,5 @@ abstract class AbstractTempSensor implements TempSensor
     {
         $this->name = $name;
         return $this;
-    }
-
-    public function printTemp(): void
-    {
-        $temp = $this->getTemp();
-        $name = $this->getName();
-        if ($temp !== null) {
-            echo "Teplota na senzoru '$name' je: ${temp}°C\n";
-        } else {
-            echo "Teplota na senzoru '$name' není k dispozici\n";
-        }
     }
 }

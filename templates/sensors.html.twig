@@ -3,13 +3,17 @@
     <div  class="telo">
         <h1>Senzory</h1>
         {% for sensor in sensors %}
-            <div class="sensor">
-                <h2>{{ sensor.name }}</h2>
-                {% if sensor.temp is null %}
+            <div class="sensor{% if sensor.hasError() %} error{% endif %}">
+                <h2>{{ sensor.sensorName }}</h2>
+
+                {% if sensor.hasError() %}
                     <p>teplota není k dispozici</p>
+                    <p>{{ sensor.errorMessage }}</p>
                 {% else %}
                     <p>{{ sensor.temp }}°C</p>
+                    <p>{{ sensor.timestamp.format("c") }}</p>
                 {% endif %}
+
             </div>
         {% endfor %}
     </div>

@@ -14,6 +14,9 @@ class Manager
         $sensors[] = (new HttpTempSensor(
             "https://home.spsostrov.cz/~sterzik/temp.php?sensor=2"
         ))->setName("venku");
+        $sensors[] = (new HttpTempSensor(
+            "url"
+        ))->setName("chyba");
 
         return $sensors;
     }

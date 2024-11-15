@@ -20,10 +20,7 @@ class TempController extends AbstractController
     {
         $sensors = $this->tempManager->getSensors();
         $sensors = array_map(function ($sensor) {
-            return [
-                "name" => $sensor->getName(),
-                "temp" => $sensor->getTemp(),
-            ];
+            return $sensor->getTempData();
         }, $sensors);
         return $this->render("sensors.html.twig", [
             "sensors" => $sensors,
