@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div  class="telo">
+        <h1>Temp sensors</h1>
+        {% for sensor in sensors %}
+            <div class="sensor">
+                <h2>{{ sensor.name }}</h2>
+                {% set temp = sensor.temp %}
+                {% if temp is not null %}
+                    <div class="temp">
+                        {{ temp }}°C
+                    </div>
+                {% else %}
+                    <div class="temp na">
+                        teplota není k dispozici
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
